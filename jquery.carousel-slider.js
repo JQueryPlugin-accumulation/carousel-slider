@@ -61,7 +61,10 @@
         };
 
         var setup = function() {
-            if (slider.length === 1) {
+            if (slider.children.length === 1) {
+                if (slider.settings.controlSelector) {
+                    slider.settings.controlSelector.hide();
+                }
                 el.destroySlider();
                 return this;
             }
@@ -97,6 +100,10 @@
                     var index = slider.settings.controlSelector.children().index($(this));
                     el.goToSlide(index);
                 });
+            }
+
+            if (slider.settings.touchEnabled) {
+                initTouch();
             }
 
             bindDirection();
@@ -267,7 +274,7 @@
             }
 
             if (slider.settings.controlSelector) {
-                var dot = slider.settings.controlSelector.children();
+                var dot = slider.settings.controlSelector.find('li');
                 dot.each(function() {
                     $(this).removeClass('active');
                 });
